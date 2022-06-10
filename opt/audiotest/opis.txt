@@ -1,0 +1,136 @@
+Aby skorzystac z tego testu aduio musisz miec
+zainstalowany loklany serwer wwww np apache2, lighttpd
+oraz php.
+
+
+Poniżej opis jak zrobić lokalny test pomiarów poziomu naszego
+audio jakie wychodzi do sieci SVXReflectora. 
+W tym celu będzie wykorzystana karat wirtualna ALSA Loop i 
+audio z svxlink będzie można nagrywać poprzez taka wirtualną kartę i odsłuchać
+na specjalnej stronie w dashboard gdzie będziemy widzieli wskaźnik poziomu
+audio w skali dB.
+
+===========================================================
+
+
+Ładowanie wirtualnej karty dźwiękowej ALSA Loopback:
+====================================================
+
+Dopisz do pliku /etc/modules
+
+  snd_aloop
+
+Dopisz linie na poczatku pliku w /etc/modprobe.d/alsa.conf
+
+  options snd_aloop index=1
+
+
+Zrób reboot komputera
+
+Możesz sprawdzić poleceniem czy widać kartę Loopback:
+
+cat /proc/asound/cards
+
+Będzie widać w wykazie Loopback pod numerem:
+
+ 0 [Headphones     ]: bcm2835_headpho - bcm2835 Headphones
+                      bcm2835 Headphones
+ 1 [Loopback       ]: Loopback - Loopback
+                      Loopback 1
+
+
+Skopiuj plik SimplexLogicTS.tcl do /usr/share/svxlink/events.d/
+
+
+Zrób kopie swojego svxlink.conf 
+
+cp /etc/svxlink/svxlink.conf /etc/svxlink/svxlink-kopia.conf
+
+
+Zrób zmiany w /etc/svxlink/svxlink.conf
+========================================= 
+
+Dopisz SimplexLogicTS 
+
+w [GLOBAL] tak jak poniżej linia:
+
+LOGICS=SimplexLogic,ReflectorLogic,SimplexLogicTS
+
+oraz w [ReflectorLink] tak jak ponizje linia:
+
+CONNECT_LOGICS=SimplexLogic:9:SVX,ReflectorLogic,SimplexLogicTS
+
+==========================================
+
+Zrób restart svxlink
+
+systemctl restart svxlink
+
+
+Możesz teraz nagrać swoje audio:
+===========================================
+
+Otwórz stronę na swoim dashboard:
+
+http://ip_hotspota/audio/
+
+Wybierz grupę testowa np TG999  uzwajając DTMF
+kodu: 91999#
+
+Kliknij klawisz "Klikij aby nagrać testowe audio 15 sec"
+
+Mów do mikrofonu tak jakbyś przeprowadzał łączność
+
+Czas nagrania maksymalny to 15 sekund.
+
+Po zakończeniu nagrywania strona na dsahboard odświeży się
+(na chwile pokaże sie kolorowy wskaźnik miernika poziomu)
+i pod miernikiem zobaczysz nazwę nagranego pliku który
+będzie miał w nazwie dokładna ostatnią datę i czas nagrania.
+
+Możesz teraz odsłuchać nagrane audio klikając na przycisk
+odtwarzacza pod nazwa pliku audio.
+
+
+Patrz na wskaźnik na stronie, poprawnie ustawione audio powinno być
+między -15 a 10dB i tylko pojedyncze piki mogą pojawiać się na -10dB
+
+Jeśli nagrane audio nie pokazuje zalecanych poziomów uruchom program
+alsamixer i zmień ustawienia wzmocnienia wejścia mikrofonowego i 
+zrób ponownie procedurę nagrywania audio. Powtarzaj to aż do uzyskanie
+rekomendowanych ustawień audio. 
+
+
+Po zakończeniu testów:
+======================
+
+Najpierw zrób kopie testowego svxlink.conf (może sie znów kiedyś przyda)
+
+cp /etc/svxink/svxlink.conf /etc/svxlink/svxlink-audio.conf
+
+Przywróć swój svxlink.conf 
+
+cp /etc/svxlink/svxlink-kopia.conf /etc/svxlink/svxlink.conf
+
+Zrób restart svxlink poleceniem:
+
+systemctl restart svxlink
+
+==========================
+
+
+Możesz także ręcznie nagrywać audio poleceniem:
+
+/opt/audiotest/audio.sh
+
+mów do mikrofonu tak jakbyś przeprowadzał łączność
+
+Czas nagrania maksymalny 10 sekund.
+
+Po zakończeniu nagrywania używając klawiszami CTRL+C 
+
+będziesz mógł odsłuchać swoje nagranie na stronie dashboard
+
+http://ip_hosta/audio
+
+
