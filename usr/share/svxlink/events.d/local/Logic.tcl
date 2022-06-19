@@ -515,9 +515,36 @@ proc dtmf_cmd_received {cmd} {
   #  return 1
   #}
 
-  return 0
-}
 
+#LOCAL IP articulation with 3#
+#change sp0dz
+ if {$cmd == "3"} {
+  set result [catch {exec ping -c 1 google.com }];
+  if {$result == 0} {
+     puts "Internet online :Connected"
+     playMsg "EchoLink" "connected";
+        } else {
+        puts "Internet online: Disconected";
+        playMsg "EchoLink" "disconnected"
+        }
+
+        set runcmd [exec hostname -I];
+        set splitip [split $runcmd .];
+
+        lassign $splitip ip1 ip2 ip3 ip4
+        spellWord $ip1;
+        playMsg "Default" "decimal"
+        spellWord $ip2;
+        playMsg "Default" "decimal"
+        spellWord $ip3;
+        playMsg "Default" "decimal"
+        spellWord $ip4;
+
+        return 1
+        }
+return 0
+}
+#end change sp0dz
 
 #
 # Executed once every whole minute. Don't put any code here directly
