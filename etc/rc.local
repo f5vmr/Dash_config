@@ -12,8 +12,8 @@
 # By default this script does nothing.
 
 
-## Set TRX Config
-#/opt/sa818/trx/prog.sh
+## Set TRX Config during startup
+#/opt/fmpoland/sa818/818cli-prog
 
 
 # Orange Pi Zero GPIO permision
