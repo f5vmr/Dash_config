@@ -4,7 +4,7 @@ Mozliwosc słuchania audio z hotspota w dashboard
 
 Instalacja wymaganego pakietu nodejs:
 
-sudo apt install -y nodejs
+sudo apt install -y nodejs node-ws
 
 Idea bazuje na rozwiazaniu jakie zastosowano w dahboard DVSwitch który robiłem w 2020.
 Strumien UDP aduio (48 kHz, 2 channels) z svxlink jest przekierowane
