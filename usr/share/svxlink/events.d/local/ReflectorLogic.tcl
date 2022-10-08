@@ -138,13 +138,13 @@ proc report_tg_status {} {
 #   old_tg -- The talk group that was active
 #
 proc tg_selected {new_tg old_tg} {
-  #puts "### tg_selected #$new_tg (old #$old_tg)"
+  puts "### tg_selected #$new_tg (old #$old_tg)"
   # Reject incoming Echolink connections while a talkgroup is active
-  #if {$new_tg != 0} {
-  #  setConfigValue "ModuleEchoLink" "REJECT_INCOMING" "^.*$"
-  #} else {
-  #  setConfigValue "ModuleEchoLink" "REJECT_INCOMING" "^$"
-  #}
+  if {$new_tg != 0} {
+    setConfigValue "ModuleEchoLink" "REJECT_INCOMING" "^.*$"
+  } else {
+    setConfigValue "ModuleEchoLink" "REJECT_INCOMING" "^$"
+  }
 }
 
 
