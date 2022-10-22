@@ -205,7 +205,7 @@ proc send_long_ident {hour minute} {
    set current_hour [clock format [clock sec] -format %k];
 
 
-  if {$current_hour >= "7" && $current_hour <= "23"} {
+  if {$current_hour >= "6" && $current_hour <= "23"} {
 
   # Play the voice ID if enabled
   if {$long_voice_id_enable} {
