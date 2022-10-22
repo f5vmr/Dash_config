@@ -67,6 +67,9 @@ proc startup {} {
   #playMsg "Core" "online"
   #send_short_ident
   playSilence 1000;
+  #send_short_ident
+  #playSilence 350;
+  #puts "Playing Welcome MSG"
   playMsg "Core" "welcome_fmpoland";
   playSilence 350;
 }
@@ -148,36 +151,37 @@ proc send_short_ident {{hour -1} {minute -1}} {
   variable short_voice_id_enable
   variable short_cw_id_enable
 
-  # Play voice id if enabled
-  if {$short_voice_id_enable} {
-    puts "Playing short voice ID"
-    spellWord $mycall;
-    if {$CFG_TYPE == "Repeater"} {
-      playMsg "Core" "repeater";
-    }
-    playSilence 500;
-  }
 
-  # Play announcement file if enabled
-  if {$short_announce_enable} {
-    puts "Playing short announce"
-    if [file exist "$short_announce_file"] {
-      playFile "$short_announce_file"
-      playSilence 500
-    }
-  }
+   set week_day [clock format [clock sec] -format %w];
+   set month_day [clock format [clock sec] -format %e];
+   set current_hour [clock format [clock sec] -format %k];
+   set current_min [clock format [clock sec] -format %M];
 
-  # Play CW id if enabled
-  if {$short_cw_id_enable} {
-    puts "Playing short CW ID"
-    if {$CFG_TYPE == "Repeater"} {
-      set call "$mycall/R"
-      CW::play $call
-    } else {
-      CW::play $mycall
+
+   if {$current_hour >= "6" && $current_hour <= "23"} {
+
+    if {$current_min == "30"} { 
+     if {[file exist "/var/spool/svxlink/bulletins/meteo.wav"] == 1} {
+      puts "Playing Short voice ID"
+      playSilence 250;
+      spellWord $mycall;
+      playSilence 150;
+      playFile "/var/spool/svxlink/bulletins/meteo.wav";
+     }
+   }
+
+    if {$current_min == "15" || $current_min == "45"} { 
+      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
+      puts "Playing Short voice ID"
+      playSilence 250;
+      spellWord $mycall;
+      playSilence 150;
+      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      }
     }
-    playSilence 500;
-  }
+
+   }
+
 }
 
 
@@ -217,7 +221,7 @@ proc send_long_ident {hour minute} {
    playSilence 100;
   # Play CW id if enabled
   if {$long_cw_id_enable} {
-    puts "Playing long CW ID"
+      puts "Playing long CW ID"
       CW::play $mycall
       playSilence 100
    }
@@ -239,6 +243,16 @@ proc send_long_ident {hour minute} {
      source "/var/spool/svxlink/bulletins/hydro.tcl";
    }
 
+ }
+
+# Meteo Alerts
+
+ if {$current_hour >= "6" && $current_hour <= "23"} {
+ 
+      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
+      playSilence 250;
+      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      }
  }
 
 # end Long ID
