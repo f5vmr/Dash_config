@@ -87,25 +87,37 @@ proc play_help {} {
 
 proc play_hydro {} {
 
-   playSilence 1000;
+  playSilence 1000;
 
    if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
-     puts "Playing HydroInfo Info";
+     puts "Playing HYDRO Info";
      source "/var/spool/svxlink/bulletins/hydro.tcl";
    }
 }
 
 proc play_meteo {} {
 
-   playSilence 1000;
+  playSilence 1000;
 
    if {[file exist "/var/spool/svxlink/bulletins/wx.tcl"] == 1} {
      puts "Playing WX Info";
      source "/var/spool/svxlink/bulletins/wx.tcl";
    }
    if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
-     puts "Playing HydroInfo Info";
+     puts "Playing HYDRO Info";
      source "/var/spool/svxlink/bulletins/hydro.tcl";
+   }
+}
+
+proc play_malerts {} {
+
+  playSilence 1000;
+
+   if {[file exist "/var/spool/svxlink/bulletins/meteo.wav"] == 1} {
+     puts "Playing METEO Alerts";
+     playFile "/var/spool/svxlink/bulletins/meteo.wav";
+   } else {
+     playMsg "MeteoInfo" "noalerts";
    }
 }
 
