@@ -84,7 +84,15 @@ proc dtmfDigitReceived {char duration} {
 #
 proc dtmfCmdReceived {cmd} {
   printInfo "DTMF command received: $cmd"
-    deactivateModule
+#  if {$cmd == "0"} {
+#      processEvent "play_meteo"
+#  } elseif {$cmd == "1"} {
+#      processEvent "play_malerts" 
+#  } elseif {$cmd == ""} {
+    deactivateModule;
+#  } else {
+#  processEvent "unknown_command $cmd"
+#  }
 }
 
 
@@ -96,14 +104,15 @@ proc dtmfCmdReceived {cmd} {
 #
 proc dtmfCmdReceivedWhenIdle {cmd} {
   printInfo "DTMF command received when idle: $cmd"
-  if {$cmd == "0"} {
-      processEvent "play_meteo";
-  }
-#  if {$cmd == "1"} {
-#      processEvent "play_hydro" ;
-#  }
 
-    deactivateModule;
+  if {$cmd == "0"} {
+  processEvent "play_meteo";
+  }
+  if {$cmd == "1"} {
+      processEvent "play_malerts"
+  }
+
+  deactivateModule;
 
 }
 
@@ -115,7 +124,7 @@ proc dtmfCmdReceivedWhenIdle {cmd} {
 #
 proc squelchOpen {is_open} {
   if {$is_open} {set str "OPEN"} else { set str "CLOSED"}
-  #printInfo "The squelch is $str"
+  printInfo "The squelch is $str"
   
 }
 
@@ -126,7 +135,7 @@ proc squelchOpen {is_open} {
 # that initiated the message playing.
 #
 proc allMsgsWritten {} {
-  #printInfo "allMsgsWritten called..."
+  printInfo "allMsgsWritten called..."
   
 }
 
