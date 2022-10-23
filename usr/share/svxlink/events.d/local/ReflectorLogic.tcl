@@ -119,8 +119,8 @@ proc report_tg_status {} {
     playMsg "Core" "talk_group"
     say_talkgroup $selected_tg }
   } else {
-    #playMsg "Core" "previous"
   if {$previous_tg<1239900} {
+    playMsg "Core" "previous"
     playMsg "Core" "talk_group"
     say_talkgroup $previous_tg }
   }
