@@ -102,7 +102,10 @@ proc play_meteo {} {
    if {[file exist "/var/spool/svxlink/bulletins/wx.tcl"] == 1} {
      puts "Playing WX Info";
      source "/var/spool/svxlink/bulletins/wx.tcl";
+   } else {
+     playMsg "MeteoInfo" "wx_nodata";
    }
+
    if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
      puts "Playing HYDRO Info";
      source "/var/spool/svxlink/bulletins/hydro.tcl";
