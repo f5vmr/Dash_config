@@ -151,15 +151,34 @@ proc send_short_ident {{hour -1} {minute -1}} {
   variable short_voice_id_enable
   variable short_cw_id_enable
 
-  # Play voice id if enabled
-  if {$short_voice_id_enable} {
-    puts "Playing short voice ID"
-    spellWord $mycall;
-    if {$CFG_TYPE == "Repeater"} {
-      playMsg "Core" "repeater";
+
+   set week_day [clock format [clock sec] -format %w];
+   set month_day [clock format [clock sec] -format %e];
+   set current_hour [clock format [clock sec] -format %k];
+   set current_min [clock format [clock sec] -format %M];
+
+
+   if {$current_hour >= "6" && $current_hour <= "23"} {
+
+    if {$current_min == "30"} { 
+     if {[file exist "/var/spool/svxlink/bulletins/meteo.wav"] == 1} {
+      puts "Playing Meteo Alerts Info"
+      playSilence 250;
+      spellWord $mycall;
+      playSilence 150;
+      playFile "/var/spool/svxlink/bulletins/meteo.wav";
+     }
+   }
+
+    if {$current_min == "15" || $current_min == "45"} { 
+      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
+      puts "Playing Burza Info"
+      playSilence 250;
+      spellWord $mycall;
+      playSilence 150;
+      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      }
     }
-    playSilence 500;
-  }
 
   # Play announcement file if enabled
   if {$short_announce_enable} {
@@ -170,17 +189,8 @@ proc send_short_ident {{hour -1} {minute -1}} {
     }
   }
 
-  # Play CW id if enabled
-  if {$short_cw_id_enable} {
-    puts "Playing short CW ID"
-    if {$CFG_TYPE == "Repeater"} {
-      set call "$mycall/R"
-      CW::play $call
-    } else {
-      CW::play $mycall
-    }
-    playSilence 500;
-  }
+ }
+
 }
 
 
@@ -199,6 +209,7 @@ proc send_long_ident {hour minute} {
   variable long_voice_id_enable
   variable long_cw_id_enable
 
+   set month [clock format [clock sec] -format %m]; 
    set week_day [clock format [clock sec] -format %w];
    set month_day [clock format [clock sec] -format %e];
    set current_hour [clock format [clock sec] -format %k];
@@ -237,12 +248,47 @@ proc send_long_ident {hour minute} {
      puts "Playing WX Info"
      source "/var/spool/svxlink/bulletins/wx.tcl";
    }
+
    if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
      puts "Playing HydroInfo Info"
      source "/var/spool/svxlink/bulletins/hydro.tcl";
    }
 
+   if {[file exist "/var/spool/svxlink/bulletins/zplas.tcl"] == 1 && ($month >= "03" || $month <= "09")} {
+     puts "Stopien zagroznie pozarowego lasu Info play";
+     source "/var/spool/svxlink/bulletins/zplas.tcl";
+   }
+
+   if {[file exist "/var/spool/svxlink/bulletins/hfprop.tcl"] == 1} {
+     puts "Playing HF VHF Propagation Info"
+     source "/var/spool/svxlink/bulletins/hfprop.tcl";
+   }
+
  }
+################ 
+
+### miedzy 5 a 23 
+ if {$current_hour >= "5" && $current_hour <= "23"} {
+
+  # Meteo Alerts jesli sa dostepne
+      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
+      puts "Playing Burza Info"
+      playSilence 250;
+      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      }
+
+  # Play announcement file if enabled
+     if {$long_announce_enable} {
+       puts "Playing long announce"
+       if [file exist "$long_announce_file"] {
+         playFile "$long_announce_file"
+         playSilence 500
+        }
+      }
+
+ }
+#############
+
 
 # end Long ID
 }

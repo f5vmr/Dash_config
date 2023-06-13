@@ -90,37 +90,66 @@ proc play_hydro {} {
   playSilence 1000;
 
    if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
-     puts "Playing HYDRO Info";
-     source "/var/spool/svxlink/bulletins/hydro.tcl";
+     puts "Playing HYDRO Info"
+     source "/var/spool/svxlink/bulletins/hydro.tcl"
+     playMsg "HydroInfo" "hydro_source"
+      } else {
+     playMsg "HydroInfo" "hydro"
+     playMsg "HydroInfo" "nodata"
    }
+
+}
+proc play_hfprop {} {
+   playSilence 1000;
+   if {[file exist "/var/spool/svxlink/bulletins/hfprop.tcl"] == 1} {
+     puts "Playing HF VHF Propagation Info"
+     source "/var/spool/svxlink/bulletins/hfprop.tcl"
+     playMsg "HFProp" "source"
+     } else {
+       playMsg "HFProp" "hfprop"
+       playMsg "HFProp" "nodata"
+   }
+
+}
+proc play_zplas {} {
+
+  set month [clock format [clock sec] -format %m];
+
+  playSilence 1000;
+
+   if {[file exist "/var/spool/svxlink/bulletins/zplas.tcl"] == 1 && ($month >= "03" || $month <= "09")} {
+     puts "Playing Zagrozenie Pozarowe Lasow Info"
+     source "/var/spool/svxlink/bulletins/zplas.tcl"
+     playMsg "ZPLas" "info"
+   } else {
+     playMsg "ZPLas" "zplas"
+     playMsg "ZPLas" "nodata"
+ }
 }
 
 proc play_meteo {} {
 
-  playSilence 1000;
+  playSilence 1000
 
    if {[file exist "/var/spool/svxlink/bulletins/wx.tcl"] == 1} {
-     puts "Playing WX Info";
-     source "/var/spool/svxlink/bulletins/wx.tcl";
+     puts "Playing WX Info"
+     source "/var/spool/svxlink/bulletins/wx.tcl"
+     playMsg "MeteoInfo" "wx_sources"
    } else {
-     playMsg "MeteoInfo" "wx_nodata";
+     playMsg "MeteoInfo" "wx_nodata"
    }
 
-   if {[file exist "/var/spool/svxlink/bulletins/hydro.tcl"] == 1} {
-     puts "Playing HYDRO Info";
-     source "/var/spool/svxlink/bulletins/hydro.tcl";
-   }
 }
 
 proc play_malerts {} {
 
-  playSilence 1000;
+  playSilence 1000
 
    if {[file exist "/var/spool/svxlink/bulletins/meteo.wav"] == 1} {
-     puts "Playing METEO Alerts";
-     playFile "/var/spool/svxlink/bulletins/meteo.wav";
+     puts "Playing METEO Alert";
+     playFile "/var/spool/svxlink/bulletins/meteo.wav"; 
    } else {
-     playMsg "MeteoInfo" "noalerts";
+     playMsg "MeteoInfo" "noalerts"
    }
 }
 
