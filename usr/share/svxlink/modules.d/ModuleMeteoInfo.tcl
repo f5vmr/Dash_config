@@ -89,7 +89,7 @@ proc dtmfCmdReceived {cmd} {
 #  } elseif {$cmd == "1"} {
 #      processEvent "play_malerts" 
 #  } elseif {$cmd == ""} {
-    deactivateModule;
+    deactivateModule
 #  } else {
 #  processEvent "unknown_command $cmd"
 #  }
@@ -106,10 +106,19 @@ proc dtmfCmdReceivedWhenIdle {cmd} {
   printInfo "DTMF command received when idle: $cmd"
 
   if {$cmd == "0"} {
-  processEvent "play_meteo";
+  processEvent "play_meteo"
   }
   if {$cmd == "1"} {
       processEvent "play_malerts"
+  }
+  if {$cmd == "2"} {
+      processEvent "play_hfprop"
+  }
+  if {$cmd == "3"} {
+      processEvent "play_zplas"
+  }
+  if {$cmd == "4"} {
+      processEvent "play_hydro"
   }
 
   deactivateModule;
