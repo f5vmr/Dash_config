@@ -21,6 +21,9 @@ use warnings;
 use JSON qw(decode_json);
 use LWP::Simple qw(get);
 use POSIX qw(strftime);
+use Time::Piece;
+
+my $hour=localtime->strftime('%H')*1;
 
 #use Data::Dumper;              
 
@@ -65,6 +68,8 @@ if(!$@){
   $m=substr $time,14,2;
 
   print ZP "playMsg \"ZPLas\" \"godzina_pomiaru\";\n";
+  if ($hour<$h && $h != 9) {
+  print ZP "playMsg \"ZPLas\" \"wczoraj\";\n";}
   print ZP "playTime $h $m;\n";
 
   if ($condition == 0) { $con = "brak";}
