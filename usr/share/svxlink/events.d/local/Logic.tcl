@@ -171,12 +171,12 @@ proc send_short_ident {{hour -1} {minute -1}} {
    }
 
     if {$current_min == "15" || $current_min == "45"} { 
-      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
-      puts "Playing Burza Info"
+      if {[file exist "/var/spool/svxlink/bulletins/burze.wav"] == 1} {
+      puts "Playing Burze Info"
       playSilence 250;
       spellWord $mycall;
       playSilence 150;
-      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      playFile "/var/spool/svxlink/bulletins/burze.wav";
       }
     }
 
@@ -271,10 +271,10 @@ proc send_long_ident {hour minute} {
  if {$current_hour >= "5" && $current_hour <= "23"} {
 
   # Meteo Alerts jesli sa dostepne
-      if {[file exist "/var/spool/svxlink/bulletins/burza.wav"] == 1} {
-      puts "Playing Burza Info"
+      if {[file exist "/var/spool/svxlink/bulletins/burze.wav"] == 1} {
+      puts "Playing Burze Info"
       playSilence 250;
-      playFile "/var/spool/svxlink/bulletins/burza.wav";
+      playFile "/var/spool/svxlink/bulletins/burze.wav";
       }
 
   # Play announcement file if enabled
