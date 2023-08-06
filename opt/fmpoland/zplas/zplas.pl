@@ -1,18 +1,19 @@
 #!/usr/bin/perl
 #
-# SP2ONG  Zagrozenie pozarowe lasow v20230608
+# SP2ONG  Zagrozenie pozarowe lasow v20230715
 # zrodlo https://www.traxelektronik.pl/pogoda/las/zbiorcza.php
 #        https://bazapozarow.ibles.pl/zagrozenie/
 
 ########## Configuration 
-
+#
 # Lista strefy zagrozen:
 # 
-#my @zone=("12_D");
+# Jedna strefa 
+my @zone=("12_D");
 #
-
-my @zone=("12_D","12_E");
-
+# klika stref 
+#my @zone=("12_D","12_E");
+#
 #
 ######################
 
