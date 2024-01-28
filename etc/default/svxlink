@@ -18,7 +18,7 @@ RUNASUSER=svxlink
 CFGFILE=/etc/svxlink/svxlink.conf
 
 # Where to place the log file
-LOGFILE=/var/log/svxlink
+LOGFILE=/var/log/svxlink.log
 
 # Where to place the PID file
 PIDFILE=/run/svxlink.pid
