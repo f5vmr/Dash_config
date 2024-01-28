@@ -1,16 +1,16 @@
 {
-  "Location": "Miasto,PL",
-  "Locator":  "JO93AB",
-  "Sysop": "Imie N0CALL",
+  "Location": "",
+  "Locator":  "",
+  "Sysop": "",
   "LAT": "",
   "LONG": "",
   "TXFREQ": "",
   "RXFREQ": "",
-  "CTCSS": "0",
+  "CTCSS": "",
   "DefaultTG": "",
   "Mode": "FM",
-  "Type": "3",
-  "Echolink": "0",
-  "Website": "http://www.fm-poland.pl",
-  "LinkedTo": "FM Poland"
+  "Type": "",
+  "Echolink": "",
+  "Website": "",
+  "LinkedTo": ""
 }
