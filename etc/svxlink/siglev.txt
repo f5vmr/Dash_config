@@ -1,41 +1,12 @@
 
 
-
-Jeśli nasze radio nie posiada wyprowadzonego sygnału o otwarciu blokady SQL
-możemy zamisat VOX używać otwarcia odbiornika w SQL_DEYT zrobić to na bazie 
-poziomu odebranego sygnału. Wymaga to stałego sygnału z odbiornika np radia 
-z serii GM mają dostępny sygnał na szynie
-z tyłu radia. Audio to nie jest zamkniete blokadą szumu ma ma średni poziom o
-podobnej wartości. Musimy wykonać kalibracje przy pomocy programu dostępnego
-razem z svxlink który nazywa sie "siglevdetcal". Przy pomocy jego mierzymy
-średni poziom odbieranego sygnału (naciskamy PTT nie mowimy nic i nacicnac 
-ENTER aby rozpoaczac pomiar)
-i nastepnie po zrobieniu tego pomiaru robimy
-pomiary szumu naciskajac drugi raz ENTER. 
-Otrzymane wartości z programu wprowadza sie w svxlink.conf
-
-Aby używać otwarcia odbiornika na bazie poziomu odebranego sygnału
-należy w svxlink.conf w cześci [Rx1] wpisac:
-
 SQL_COMBINE=Rx1:SIGLEV|Rx1:PTY
 
-
-Zatrzymac svxlink:
  
-systemctl stop svxlink
+sudo systemctl stop svxlink
 
-Zwroć uwage aby wartosci PREAMP= oraz DEEMPHASIS= w svxlink_sig.conf była
-taka sama jak masz w svxlink.conf
-
-Uruchomic program siglevdetcal w nastepujacy sposob
 
 siglevdetcal /etc/svxlink/svxlink_sig.conf Rx1
-
-W pierwszej fazie jest mierzony szum wejsciowy i po zakonczeniu pomiaru
-szumu nalezy nacisnac PTT w swoim radio i nic nie mowic do mikrofonu i
-nacisnoac ENTER aby dokonac pomiaru sygnału
-
-Po uruchmieniu programu mamy na ekranie:
 
 SigLevDetCal v1.0.5 Copyright (C) 2003-2015 Tobias Blomberg / SM0SVX
 
@@ -80,9 +51,7 @@ Dynamic range for the siglev measurement : 35.9dB
 SIGLEV_SLOPE=27.86
 SIGLEV_OFFSET=-51.03
 
-Wpisac otrzymane wyniki dla SIGLEV_SLOPE i SIGLEV_OFFSET w svxlink.conf w [Rx1:SIGLEV] 
+Enter the obtained results for SIGLEV_SLOPE and SIGLEV_OFFSET in svxlink.conf in [Rx1:SIGLEV]
 
-uruchomić svxlink i sprawdzic progi ustawien dla SQL_SIGLEV_OPEN_THRESH i SQL_SIGLEV_CLOSE_THRESH
-ewentulanie ustawić indywidualnie ich wartości 
-
-
+run svxlink and check the setting thresholds for SQL_SIGLEV_OPEN_THRESH and SQL_SIGLEV_CLOSE_THRESH
+or set their values individually
