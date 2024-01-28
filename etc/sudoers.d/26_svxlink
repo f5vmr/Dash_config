@@ -1,3 +1,4 @@
+#implemented in part.
 svxlink ALL=(ALL) NOPASSWD: ALL
 svxlink ALL=(ALL) NOPASSWD:/sbin/reboot
 svxlink ALL=(ALL) NOPASSWD:/usr/sbin/halt
