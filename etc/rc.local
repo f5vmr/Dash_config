@@ -15,11 +15,7 @@
 ## Set TRX Config during startup
 #/opt/fmpoland/sa818/818cli-prog
 
-
-# Orange Pi Zero GPIO permision
-chmod 0777 /sys/class/gpio/gpio7/value
-chmod 0777 /sys/class/gpio/gpio10/value
-
+#no changes required - all deprecated in 1.19.02.2
 #restore sound card settings
 #alsactl restore
 
