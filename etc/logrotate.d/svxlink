@@ -1,12 +1,1 @@
-/var/log.hdd/svxlink {
-    rotate 1
-    missingok
-    notifempty
-    nocompress
-    size 100k
-    create 0644 svxlink daemon
-    postrotate
-        killall -HUP svxlink
-    endscript
-}
-
+# none - already set in scripts/resetlog.sh
