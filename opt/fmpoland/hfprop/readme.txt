@@ -1,12 +1,12 @@
 
-Dane o aktualnej prognozie propagacji na pasmach KF i VHF na bazie danych z strony:
+Data on the current propagation forecast on the HF and VHF bands based on the website:
 
 https://www.hamqsl.com/solarxml.php
 
 
-Skopiowac plik hfprop-cron do katalog /etc/cron.d/
+Copy the hfprop-cron file to the /etc/cron.d/ directory
 
-Plik ten pobiera dane co 30 min miedzy 5 a 23
+This file downloads data every 30 minutes between 5 a.m. and 11 p.m
 
 
-Kod DTMF: 62# odtworzenie komunikatu
+DTMF code: 62# message playback

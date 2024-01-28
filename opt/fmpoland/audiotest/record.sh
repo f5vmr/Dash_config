@@ -1,6 +1,5 @@
 #!/bin/bash
-# Nagrywanie testowego audio do pomiaru poziomow
-#
+# 
 # remove old files
 count=`ls -1 /var/www/html/audio/*.wav 2>/dev/null | wc -l`
 if [ $count != 0 ]

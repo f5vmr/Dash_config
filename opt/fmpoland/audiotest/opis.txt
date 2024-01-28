@@ -1,121 +1,113 @@
-Aby skorzystac z tego testu aduio musisz miec
-zainstalowany loklany serwer wwww np apache2, lighttpd
-oraz php.
+To use this audio test you must have
+installed local web server, e.g. apache2 and php.
 
 
-Poniżej opis jak zrobić lokalny test pomiarów poziomu naszego
-audio jakie wychodzi do sieci SVXReflectora. 
-W tym celu będzie wykorzystana karat wirtualna ALSA Loop i 
-audio z svxlink będzie można nagrywać poprzez taka wirtualną kartę i odsłuchać
-na specjalnej stronie w dashboard gdzie będziemy widzieli wskaźnik poziomu
-audio w skali dB.
+Below is a description of how to perform a local measurement test of the level of our audio output to the SVXReflector network.
+For this purpose, the ALSA Loop virtual carat will be used
+audio from svxlink will be able to be recorded via such a virtual card and listened to on a special page in the dashboard where we will see the audio level indicator on the dB scale.
 
 ===========================================================
 
 
-Ładowanie wirtualnej karty dźwiękowej ALSA Loopback:
+Loading the ALSA Loopback Virtual Sound Card:
 ====================================================
 
-Dopisz do pliku /etc/modules
+Add to file /etc/modules
 
   snd_aloop
 
-Dopisz linie na poczatku pliku w /etc/modprobe.d/alsa.conf
+Add the lines to the beginning of the file in /etc/modprobe.d/alsa.conf
 
   options snd_aloop index=1
 
 
-Zrób reboot komputera
+Reboot your pi.
 
-Możesz sprawdzić poleceniem czy widać kartę Loopback:
+You can check if the card is visible with the command Loopback:
 
 cat /proc/asound/cards
 
-Będzie widać w wykazie Loopback pod numerem:
+It will be visible in the Loopback directory under the number:
 
- 0 [Headphones     ]: bcm2835_headpho - bcm2835 Headphones
-                      bcm2835 Headphones
+ 0 [USB-Sound-Card    ]: USB-Sound-Card - USB Audio
+                      CM108/CM119 Sound Card
  1 [Loopback       ]: Loopback - Loopback
                       Loopback 1
 
 
-Skopiuj plik SimplexLogicTS.tcl do /usr/share/svxlink/events.d/
+Copy the SimplexLogicTS.tcl file to /usr/share/svxlink/events.d/
 
 
-Zrób kopie swojego svxlink.conf 
+Make copies of your svxlink.conf 
 
-cp /etc/svxlink/svxlink.conf /etc/svxlink/svxlink-kopia.conf
+cp /etc/svxlink/svxlink.conf /etc/svxlink/svxlink-copy.conf
 
 
-Zrób zmiany w /etc/svxlink/svxlink.conf
+Make changes in /etc/svxlink/svxlink.conf
 ========================================= 
 
-Dopisz SimplexLogicTS 
+Add it to SimplexLogicTS 
 
-w [GLOBAL] tak jak poniżej linia:
+in [GLOBAL] as below line:
 
 LOGICS=SimplexLogic,ReflectorLogic,SimplexLogicTS
 
-oraz w [ReflectorLink] tak jak ponizje linia:
+and in [ReflectorLink] make the following line:
 
 CONNECT_LOGICS=SimplexLogic:9:SVX,ReflectorLogic,SimplexLogicTS
 
 ==========================================
 
-Zrób restart svxlink
+Now restart svxlink
 
-systemctl restart svxlink
+sudo systemctl restart svxlink
 
 
-Możesz teraz nagrać swoje audio:
+You can now record your audio:
 ===========================================
 
-Otwórz stronę na swoim dashboard:
+Open the page on your dashboard:
 
-http://ip_hotspota/audio/
+http://ip_address/audio/
 
-Wybierz grupę testowa np TG999  uzwajając DTMF
-kodu: 91999#
+Select the test group, e.g. TG999, using DTMF
+code: 91999#
 
-Kliknij klawisz "Klikij aby nagrać testowe audio 15 sec"
+Click the "Click to record 15 sec test audio" button
 
-Mów do mikrofonu tak jakbyś przeprowadzał łączność
+Speak into the microphone as if you were making a call
 
-Czas nagrania maksymalny to 15 sekund.
+The maximum recording time is 15 seconds.
 
-Po zakończeniu nagrywania strona na dsahboard odświeży się
-(na chwile pokaże sie kolorowy wskaźnik miernika poziomu)
-i pod miernikiem zobaczysz nazwę nagranego pliku który
-będzie miał w nazwie dokładna ostatnią datę i czas nagrania.
+Once the recording is finished, the dashboard page will refresh
+(the color indicator of the level meter will appear momentarily)
+and under the meter you will see the name of the recorded file which
+will have the exact last date and time of recording in its name.
 
-Możesz teraz odsłuchać nagrane audio klikając na przycisk
-odtwarzacza pod nazwa pliku audio.
+You can now listen to the recorded audio by clicking the button
+player under the name of the audio file.
 
 
-Patrz na wskaźnik na stronie, poprawnie ustawione audio powinno być
-między -15 a 10dB i tylko pojedyncze piki mogą pojawiać się na -10dB
+Look at the indicator on the page, the audio should be set correctly
+between -15 and 10dB and only single peaks may appear at -10dB.
 
-Jeśli nagrane audio nie pokazuje zalecanych poziomów uruchom program
-alsamixer i zmień ustawienia wzmocnienia wejścia mikrofonowego i 
-zrób ponownie procedurę nagrywania audio. Powtarzaj to aż do uzyskanie
-rekomendowanych ustawień audio. 
+If the recorded audio does not show the recommended levels, run the alsamixer program and change the microphone input gain settings and
+do the audio recording procedure again. Repeat this until you get it
+recommended audio settings.
 
 
 ==========================
 
 
-Możesz także ręcznie nagrywać audio poleceniem:
+You can also manually record audio with the command: /opt/fmpoland/audiotest/audio.sh
 
-/opt/fmpoland/audiotest/audio.sh
+speak into the microphone as if you were making a call
 
-mów do mikrofonu tak jakbyś przeprowadzał łączność
+Recording time maximum 10 seconds.
 
-Czas nagrania maksymalny 10 sekund.
+After finishing recording, use CTRL+C
 
-Po zakończeniu nagrywania używając klawiszami CTRL+C 
+you will be able to listen to your recording on the dashboard page
 
-będziesz mógł odsłuchać swoje nagranie na stronie dashboard
-
-http://ip_hosta/audio
-
+http://ip_address/audio
 

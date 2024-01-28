@@ -16,13 +16,13 @@ try:
  r = urlopen(req) 
 
 except HTTPError as e:
-   print("HTTP blad, strona nie jest dostepna")
+   print("HTTP error, page not available")
    if os.path.exists("/var/spool/svxlink/bulletins/hfprop.tcl"):
       os.remove("/var/spool/svxlink/bulletins/hfprop.tcl")   
    #file.write("playMsg \"HFProp\" \"nodata\";\n")
 
 except URLError as e:
-   print("URL blad, strona nie jest dostepna")
+   print("URL error, page not available")
    if os.path.exists("/var/spool/svxlink/bulletins/hfprop.tcl"):
       os.remove("/var/spool/svxlink/bulletins/hfprop.tcl")   
    #file.write("playMsg \"HFProp\" \"nodata\";\n")

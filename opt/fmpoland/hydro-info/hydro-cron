@@ -1,4 +1,4 @@
 CRONDARGS=-1 -m off
 MAILTO=""
-# pobiera hydro info z IMGW 2 min przed pelna godzina
+# downloads hydro info from IMWM 2 minutes before the hour
 54 5-23 * * * root /opt/fmpoland/hydro-info/hydro.pl >/dev/null 2>&1
